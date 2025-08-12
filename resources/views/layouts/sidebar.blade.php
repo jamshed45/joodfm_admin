@@ -16,15 +16,13 @@
                     </a>
                 </li>
 
+
+
                 <li>
-                    <a href="#" class="has-arrow waves-effect">
-                        <i class="ti-layout-tab-v"></i>
-                        <span> Customers </span>
+                    <a href="{{ route('client-logos.index') }}" class="waves-effect">
+                        <i class="ti-settings"></i>
+                        <span>Client Logos</span>
                     </a>
-                    <ul class="sub-menu" aria-expanded="false">
-                        {{--  --}}
-                    </ul><li><a href="{{ route('client-logos.index') }}">Projects</a></li>
-                        <li><a href="{{ route('client-logos.index') }}">Client Logos</a></li>
                 </li>
 
 

@@ -49,7 +49,7 @@ class DashboardController extends Controller
         // }
 
 
-        //return view('admin.dashboard.index');
+        return view('admin.dashboard.index');
         //  return view('admin.dashboard.index', compact('counts', 'userRole'));
 
     }
