@@ -86,7 +86,7 @@ class ClientLogoController extends Controller
 
             $image = $request->file('image');
             $filename = Str::random(40) . '.' . $image->getClientOriginalExtension();
-            $imagePath = $image->storeAs('uploads/profiles', $filename, 'public');
+            $imagePath = $image->storeAs('uploads/logos', $filename, 'public');
         }
 
         $clientLogo->name = $request->name;
