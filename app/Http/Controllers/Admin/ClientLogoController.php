@@ -20,51 +20,50 @@ class ClientLogoController extends Controller
         return view("{$this->viewPath}.index", [
             'records'   => $records,
             'title'     => "{$this->title}",
-            'routePath'     => $this->routePath,
+            'routePath' => $this->routePath,
 
         ]);
     }
 
-        public function create()
+    public function create()
     {
         return view("{$this->viewPath}.create", [
             'title'     => "{$this->title}",
-            'routePath'     => $this->routePath,
+            'routePath' => $this->routePath,
         ]);
     }
 
     public function store(Request $request)
     {
         $request->validate([
-            'name' => 'required|string|max:255',
+            'name'  => 'required|string|max:255',
             'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
         $imagePath = '';
 
         if ($request->hasFile('image')) {
-            $image = $request->file('image');
-            $filename = time() . '_' . Str::random(6) . '.' . $image->getClientOriginalExtension();
+            $image     = $request->file('image');
+            $filename  = time() . '_' . Str::random(6) . '.' . $image->getClientOriginalExtension();
             $imagePath = $image->storeAs('uploads/logos', $filename, 'public');
         }
 
         ClientLogo::create([
-            'name' => $request->name,
+            'name'  => $request->name,
             'image' => $imagePath,
         ]);
-
 
         return redirect()->route("{$this->routePath}.index")->with('success', "{$this->title} created successfully.");
     }
 
-        public function edit(string $id)
+    public function edit(string $id)
     {
         $record = ClientLogo::findOrFail($id);
 
         return view("{$this->viewPath}.edit", [
-            'record'     => $record,
+            'record'    => $record,
             'title'     => "{$this->title}",
-            'routePath'     => $this->routePath,
+            'routePath' => $this->routePath,
         ]);
     }
 
@@ -77,19 +76,17 @@ class ClientLogoController extends Controller
     {
         $imagePath = $clientLogo->image ?? '';
 
-        if ($request->hasFile('image'))
-        {
-            if ($request->image && Storage::exists('public/' . $request->image))
-            {
+        if ($request->hasFile('image')) {
+            if ($request->image && Storage::exists('public/' . $request->image)) {
                 Storage::delete('public/' . $request->image);
             }
 
-            $image = $request->file('image');
-            $filename = Str::random(40) . '.' . $image->getClientOriginalExtension();
+            $image     = $request->file('image');
+            $filename  = Str::random(40) . '.' . $image->getClientOriginalExtension();
             $imagePath = $image->storeAs('uploads/logos', $filename, 'public');
         }
 
-        $clientLogo->name = $request->name;
+        $clientLogo->name  = $request->name;
         $clientLogo->image = $imagePath;
         $clientLogo->save();
 
@@ -104,6 +101,8 @@ class ClientLogoController extends Controller
 
         $clientLogo->delete();
 
-        return redirect()->route("{$this->routePath}.index")->with('success', "{$this->title} deleted successfully.");
+        return redirect()
+        ->route("{$this->routePath}.index")
+        ->with('success', "{$this->title} deleted successfully.");
     }
 }

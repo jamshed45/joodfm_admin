@@ -25,6 +25,13 @@
                     </a>
                 </li>
 
+                <li>
+                    <a href="{{ route('hero-slides.index') }}" class="waves-effect">
+                        <i class="ti-settings"></i>
+                        <span>Hero Slider</span>
+                    </a>
+                </li>
+
 
                 <li>
                     <a href="{{ route('settings.index') }}" class="waves-effect">

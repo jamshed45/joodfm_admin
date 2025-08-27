@@ -17,9 +17,10 @@
                 Create {{ $title }}
             @endslot
             @slot('subtitle')
-                <a href="{{ route($routePath . '.index') }}">{{ Str::ucfirst(Str::plural($title)) }}</a>
+                <a href="{{ route( $routePath . '.index') }}">{{ Str::ucfirst(Str::plural($title)) }}</a>
             @endslot
         @endcomponent
+
 
         <div class="row">
             <div class="col-12">
@@ -39,21 +40,27 @@
                             </div>
                         @endif
 
-                        <form method="POST" action="{{ route($routePath . '.store') }}" autocomplete="off"
-                            enctype="multipart/form-data">
-                            @csrf
+                        <form action="{{ route( $routePath . '.store') }}" method="POST" enctype="multipart/form-data">
+                        @csrf
+                        <!-- Name -->
+                        <div class="mb-3">
+                            <label for="name">Title</label>
+                            <input type="text" name="title" id="title" class="form-control" value="" placeholder="Title">
+                        </div>
+                        <div class="mb-3">
+                            <label for="sub_title">Sub Title</label>
+                            <input type="text" name="sub_title" id="sub_title" class="form-control" value="" placeholder="Sub Title">
+                        </div>
 
-                            <div class="mb-3">
-                                <label>Name</label>
-                                <input type="text" name="name" class="form-control" value="{{ old('name') }}"
-                                    required>
-                            </div>
+                        <!-- Description -->
+                        <div class="mb-3">
+                            <label for="image">Images</label>
+                            <input type="file" name="image" id="image" class="form-control" required>
+                        </div>
 
-                            <div class="mb-3">
-                                <label>Logo Image</label>
-                                <input type="file" name="image" class="form-control"
-                                    {{ request()->isMethod('post') ? 'required' : '' }} required>
-                            </div>
+
+
+
 
                             <button type="submit" class="btn btn-primary">Submit</button>
 

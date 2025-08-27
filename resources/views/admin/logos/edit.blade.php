@@ -14,7 +14,7 @@
     @section('content')
         @component('components.breadcrumb')
             @slot('page_title')
-                {{ $title }}
+                Edit {{ $title }}
             @endslot
             @slot('subtitle')
                 <a href="{{ route($routePath . '.index') }}">{{ Str::ucfirst(Str::plural($title)) }}</a>
@@ -28,7 +28,7 @@
                 <div class="card">
                     <div class="card-body">
 
-                        <h4 class="card-title">{{ Str::ucfirst($title) }}</h4>
+                        <h4 class="card-title">Edit {{ Str::ucfirst($title) }}</h4>
                         <p class="card-title-desc"></p>
 
                         @if ($errors->any())

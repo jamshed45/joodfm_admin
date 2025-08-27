@@ -4,7 +4,7 @@
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\PermissionController;
 use App\Http\Controllers\Admin\ClientLogoController;
-
+use App\Http\Controllers\Admin\HeroSliderController;
 use App\Http\Controllers\Admin\RoleController;
 
 use App\Http\Controllers\Admin\ProfileController;
@@ -51,7 +51,9 @@ Route::group(['middleware' => 'auth'], function () {
     Route::resource('permissions', PermissionController::class);
 
     Route::resource('client-logos', ClientLogoController::class);
-    
+    Route::resource('hero-slides', HeroSliderController::class);
+
+
 
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
