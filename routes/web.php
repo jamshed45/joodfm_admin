@@ -30,19 +30,19 @@ Route::get('/', function () {
 
 Auth::routes();
 
-// Route::group(['middleware' => ['auth', 'role:admin']], function () {
+Route::group(['middleware' => ['auth', 'role:admin']], function () {
 
-//     Route::resource('organizations', OrganizationController::class);
+    Route::resource('organizations', OrganizationController::class);
 
-//     // Route::resource('organizations', OrganizationController::class);
+    // Route::resource('organizations', OrganizationController::class);
 
-// });
+});
 
-// Route::group(['middleware' => ['auth', 'role:organization']], function () {
+Route::group(['middleware' => ['auth', 'role:organization']], function () {
 
-//     Route::resource('organizations', OrganizationController::class);
+    Route::resource('organizations', OrganizationController::class);
 
-// });
+});
 
 Route::group(['middleware' => 'auth'], function () {
     Route::get('/index', [DashboardController::class, 'index'])->name('index');

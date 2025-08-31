@@ -4,7 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\SettingController;
 use App\Models\ClientLogo;
-
+use App\Models\HeroSlider;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -40,6 +40,18 @@ Route::get('/translations', function (Request $request) {
 
     return response()->json($translations[$lang] ?? $translations['en']);
 });
+
+Route::get('/hero-slides', function () {
+    $slides = HeroSlider::all()->map(function ($slide) {
+        return asset('storage/' . $slide->image);
+    });
+
+    return response()->json([
+        'slides' => $slides
+    ], 200, [], JSON_UNESCAPED_UNICODE);
+});
+
+
 
 
 Route::get('/client-logos', function () {
