@@ -43,13 +43,21 @@ Route::get('/translations', function (Request $request) {
 
 Route::get('/hero-slides', function () {
     $slides = HeroSlider::all()->map(function ($slide) {
-        return asset('storage/' . $slide->image);
+        return [
+            'en_title'     => $slide->en_title,
+            'en_sub_title' => $slide->en_sub_title,
+            'ar_title'     => $slide->ar_title,
+            'ar_sub_title' => $slide->ar_sub_title,
+            'link'         => $slide->link,
+            'image'        => asset('storage/' . $slide->image),
+        ];
     });
 
     return response()->json([
         'slides' => $slides
     ], 200, [], JSON_UNESCAPED_UNICODE);
 });
+
 
 
 
