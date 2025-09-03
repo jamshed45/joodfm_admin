@@ -28,7 +28,21 @@
                 <li>
                     <a href="{{ route('hero-slides.index') }}" class="waves-effect">
                         <i class="ti-settings"></i>
-                        <span>Hero Slider</span>
+                        <span>Hero Sliders</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="{{ route('jobs.index') }}" class="waves-effect">
+                        <i class="ti-settings"></i>
+                        <span>Jobs</span>
+                    </a>
+                </li>
+
+                                <li>
+                    <a href="{{ route('projects.index') }}" class="waves-effect">
+                        <i class="ti-settings"></i>
+                        <span>Projects</span>
                     </a>
                 </li>
 

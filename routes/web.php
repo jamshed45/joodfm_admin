@@ -6,11 +6,13 @@ use App\Http\Controllers\Admin\PermissionController;
 use App\Http\Controllers\Admin\ClientLogoController;
 use App\Http\Controllers\Admin\HeroSliderController;
 use App\Http\Controllers\Admin\RoleController;
-
+use App\Http\Controllers\Admin\JobController;
 use App\Http\Controllers\Admin\ProfileController;
 use App\Http\Controllers\Admin\SettingController;
+use App\Http\Controllers\Admin\ProjectController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -30,19 +32,7 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::group(['middleware' => ['auth', 'role:admin']], function () {
 
-    Route::resource('organizations', OrganizationController::class);
-
-    // Route::resource('organizations', OrganizationController::class);
-
-});
-
-Route::group(['middleware' => ['auth', 'role:organization']], function () {
-
-    Route::resource('organizations', OrganizationController::class);
-
-});
 
 Route::group(['middleware' => 'auth'], function () {
     Route::get('/index', [DashboardController::class, 'index'])->name('index');
@@ -52,6 +42,8 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::resource('client-logos', ClientLogoController::class);
     Route::resource('hero-slides', HeroSliderController::class);
+    Route::resource('jobs', JobController::class);
+    Route::resource('projects', ProjectController::class);
 
 
 
