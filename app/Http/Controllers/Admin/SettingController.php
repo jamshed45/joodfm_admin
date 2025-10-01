@@ -50,12 +50,12 @@ class SettingController extends Controller
 
     public function update(Request $request)
     {
-
+$settings = $request->except(['_token', '_method', 'site_logo', 'site_favicon', 'site_general_setting', 'site_logo_desktop', 'site_logo_mobile', 'site_logo_icon']);
 
         if(isset($request->site_general_setting))
         {
 
-            $settings = $request->except(['_token', '_method', 'site_logo', 'site_favicon', 'site_general_setting', 'site_logo_desktop', 'site_logo_mobile', 'site_logo_icon']);
+
 
 
             if ($request->hasFile('site_logo_desktop')) {
@@ -158,6 +158,10 @@ class SettingController extends Controller
                 Setting::updateOrCreate(['key' => $key], ['val' => $value]);
             }
         }
+
+        foreach ($settings as $key => $value) {
+                Setting::updateOrCreate(['key' => $key], ['val' => $value]);
+            }
 
 
 
