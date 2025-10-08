@@ -18,8 +18,8 @@ class HeroSliderController extends Controller
         $records = HeroSlider::latest()->get();
 
         return view("{$this->viewPath}.index", [
-            'records'   => $records,
-            'title'     => "{$this->title}",
+            'records' => $records,
+            'title'   => "{$this->title}",
             'routePath' => $this->routePath,
         ]);
     }
@@ -27,7 +27,7 @@ class HeroSliderController extends Controller
     public function create()
     {
         return view("{$this->viewPath}.create", [
-            'title'     => "{$this->title}",
+            'title' => "{$this->title}",
             'routePath' => $this->routePath,
         ]);
     }
@@ -35,9 +35,11 @@ class HeroSliderController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'title'     => 'nullable|string|max:255',
-            'sub_title' => 'nullable|string|max:255',
-            'image'     => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'en_title'     => 'required|string|max:255',
+            'en_sub_title' => 'required|string|max:255',
+            'ar_title'     => 'required|string|max:255',
+            'ar_sub_title' => 'required|string|max:255',
+            'image'        => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
         $imagePath = '';
@@ -49,9 +51,12 @@ class HeroSliderController extends Controller
         }
 
         HeroSlider::create([
-            'title'     => $request->title,
-            'sub_title' => $request->sub_title,
-            'image'     => $imagePath,
+            'en_title'     => $request->en_title,
+            'en_sub_title' => $request->en_sub_title,
+            'ar_title'     => $request->ar_title,
+            'ar_sub_title' => $request->ar_sub_title,
+            'link' => '',
+            'image'        => $imagePath,
         ]);
 
         return redirect()->route("{$this->routePath}.index")->with('success', "{$this->title} created successfully.");
@@ -62,8 +67,8 @@ class HeroSliderController extends Controller
         $record = HeroSlider::findOrFail($id);
 
         return view("{$this->viewPath}.edit", [
-            'record'    => $record,
-            'title'     => "{$this->title}",
+            'record' => $record,
+            'title'  => "{$this->title}",
             'routePath' => $this->routePath,
         ]);
     }
@@ -75,11 +80,14 @@ class HeroSliderController extends Controller
 
     public function update(Request $request, HeroSlider $heroSlider)
     {
-
         $request->validate([
-            'title' => 'nullable|string|max:255',
-            'sub_title' => 'nullable|string|max:255',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'en_title'     => 'required|string|max:255',
+            'en_sub_title' => 'required|string|max:255',
+            'ar_title'     => 'required|string|max:255',
+            'ar_sub_title' => 'required|string|max:255',
+            'image'        => $request->isMethod('post')
+                        ? 'required|image|mimes:jpeg,png,jpg,gif|max:2048'
+                        : 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
         $imagePath = $heroSlider->image ?? '';
@@ -95,9 +103,12 @@ class HeroSliderController extends Controller
             $imagePath = $image->storeAs('uploads/hero_sliders', $filename, 'public');
         }
 
-        $heroSlider->title = $request->title;
-        $heroSlider->sub_title = $request->sub_title;
-        $heroSlider->image = $imagePath;
+$heroSlider->en_title     = $request->en_title;
+$heroSlider->en_sub_title = $request->en_sub_title;
+$heroSlider->ar_title     = $request->ar_title;
+$heroSlider->ar_sub_title = $request->ar_sub_title;
+$heroSlider->link = '';
+        $heroSlider->image     = $imagePath;
         $heroSlider->save();
 
         return redirect()->route("{$this->routePath}.index")->with('success', "{$this->title} updated successfully.");

@@ -85,4 +85,11 @@ class FrontendController extends Controller
         ], 200, [], JSON_UNESCAPED_UNICODE);
     }
 
+
+    public function contactUs(Request $request)
+    {
+        print_r($request->all());
+    }
+
+
 }

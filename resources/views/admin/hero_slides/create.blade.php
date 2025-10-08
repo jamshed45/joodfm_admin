@@ -17,7 +17,7 @@
                 Create {{ $title }}
             @endslot
             @slot('subtitle')
-                <a href="{{ route( $routePath . '.index') }}">{{ Str::ucfirst(Str::plural($title)) }}</a>
+                <a href="{{ route($routePath . '.index') }}">{{ Str::ucfirst(Str::plural($title)) }}</a>
             @endslot
         @endcomponent
 
@@ -40,23 +40,72 @@
                             </div>
                         @endif
 
-                        <form action="{{ route( $routePath . '.store') }}" method="POST" enctype="multipart/form-data">
-                        @csrf
-                        <!-- Name -->
-                        <div class="mb-3">
-                            <label for="name">Title</label>
-                            <input type="text" name="title" id="title" class="form-control" value="" placeholder="Title">
-                        </div>
-                        <div class="mb-3">
-                            <label for="sub_title">Sub Title</label>
-                            <input type="text" name="sub_title" id="sub_title" class="form-control" value="" placeholder="Sub Title">
-                        </div>
+                        <form action="{{ route($routePath . '.store') }}" method="POST" enctype="multipart/form-data">
+                            @csrf
 
-                        <!-- Description -->
-                        <div class="mb-3">
-                            <label for="image">Images</label>
-                            <input type="file" name="image" id="image" class="form-control" required>
-                        </div>
+                            <!-- English Title -->
+                            <div class="mb-3">
+                                <label for="en_title">English Title</label>
+                                <input type="text" name="en_title" id="en_title"
+                                    class="form-control @error('en_title') is-invalid @enderror"
+                                    value="{{ old('en_title', $record->en_title ?? '') }}" placeholder="English Title">
+                                @error('en_title')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+
+                            <!-- English Sub Title -->
+                            <div class="mb-3">
+                                <label for="en_sub_title">English Sub Title</label>
+                                <input type="text" name="en_sub_title" id="en_sub_title"
+                                    class="form-control @error('en_sub_title') is-invalid @enderror"
+                                    value="{{ old('en_sub_title', $record->en_sub_title ?? '') }}"
+                                    placeholder="English Sub Title">
+                                @error('en_sub_title')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+
+                            <!-- Arabic Title -->
+                            <div class="mb-3">
+                                <label for="ar_title">Arabic Title</label>
+                                <input type="text" name="ar_title" id="ar_title"
+                                    class="form-control @error('ar_title') is-invalid @enderror"
+                                    value="{{ old('ar_title', $record->ar_title ?? '') }}" placeholder="Arabic Title"
+                                    dir="rtl">
+                                @error('ar_title')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+
+                            <!-- Arabic Sub Title -->
+                            <div class="mb-3">
+                                <label for="ar_sub_title">Arabic Sub Title</label>
+                                <input type="text" name="ar_sub_title" id="ar_sub_title"
+                                    class="form-control @error('ar_sub_title') is-invalid @enderror"
+                                    value="{{ old('ar_sub_title', $record->ar_sub_title ?? '') }}"
+                                    placeholder="Arabic Sub Title" dir="rtl">
+                                @error('ar_sub_title')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+
+                            <!-- Image -->
+                            <div class="mb-3">
+                                <label for="image">Image</label>
+                                <input type="file" name="image" id="image"
+                                    class="form-control @error('image') is-invalid @enderror">
+                                @error('image')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+
+                                @if (!empty($record->image))
+                                    <div class="mt-2">
+                                        <img src="{{ asset('storage/' . $record->image) }}" alt="Current Image"
+                                            class="img-thumbnail" width="200">
+                                    </div>
+                                @endif
+                            </div>
 
 
 

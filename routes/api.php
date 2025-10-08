@@ -24,6 +24,7 @@ Route::get('/translations', [FrontendController::class, 'translations']);
 Route::get('/hero-slides', [FrontendController::class, 'heroSlides']);
 Route::get('/client-logos', [FrontendController::class, 'clientLogos']);
 Route::get('/projects', [FrontendController::class, 'projects']);
+Route::post('/contact', [FrontendController::class, 'contactUs']);
 
 
 
