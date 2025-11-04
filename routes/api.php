@@ -25,6 +25,7 @@ Route::get('/hero-slides', [FrontendController::class, 'heroSlides']);
 Route::get('/client-logos', [FrontendController::class, 'clientLogos']);
 Route::get('/projects', [FrontendController::class, 'projects']);
 Route::post('/contact', [FrontendController::class, 'contactUs']);
+Route::post('/career', [FrontendController::class, 'Career']);
 
 
 
