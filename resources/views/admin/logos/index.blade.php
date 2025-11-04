@@ -66,7 +66,7 @@
                                     <tr>
                                         <td>{{ $loop->iteration }}</td>
                                         <td>{{ $record->name }}</td>
-                                        <td><img src="{{ asset('storage/' . $record->image) }}" width="200" /></td>
+                                        <td><img src="{{ asset($folderPath . '/' . $record->image) }}" width="200" /></td>
 
                                         <td>
                                             <a href="{{ route($routePath . '.edit', $record) }}" class="text-success mx-2">

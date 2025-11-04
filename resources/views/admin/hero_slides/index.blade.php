@@ -44,7 +44,7 @@
                         </div>
 
                         <div class="row mb-3">
-                            <div class="col-md-9"></div>
+                            <div class="col-md-9"> check</div>
                             <div class="col-md-3">
                                 <a href="{{ route($routePath . '.create') }}" class="btn btn-primary float-end">Add New</a>
                             </div>
@@ -66,7 +66,9 @@
                                     <tr>
                                         <td>{{ $loop->iteration }}</td>
                                         <td>{{ $record->name }}</td>
-                                        <td><img src="{{ asset('storage/' . $record->image) }}" width="200" /></td>
+                                        <td>
+                                            <img src="{{ asset($folderPath . '/' . $record->image) }}" width="200">
+                                        </td>
 
                                         <td>
                                             <a href="{{ route($routePath . '.edit', $record) }}" class="text-success mx-2">

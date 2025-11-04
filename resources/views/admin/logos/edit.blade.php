@@ -55,7 +55,7 @@
                             <label>Logo Image</label>
                             @if ($record->image)
                                 <div class="mb-2">
-                                    <img src="{{ asset('storage/' . $record->image) }}" alt="Profile Image" width="200">
+                                    <img src="{{ asset($folderPath . '/' . $record->image) }}" alt="Profile Image" width="200">
                                 </div>
                             @endif
                             <input type="file" name="image" class="form-control">

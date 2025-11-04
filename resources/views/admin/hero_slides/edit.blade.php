@@ -103,7 +103,7 @@
 
                                 @if (!empty($record->image))
                                     <div class="mt-2">
-                                        <img src="{{ asset('storage/' . $record->image) }}" alt="Current Image"
+                                        <img src="{{ asset($folderPath . '/' . $record->image) }}" alt="Current Image"
                                             class="img-thumbnail" width="200">
                                     </div>
                                 @endif

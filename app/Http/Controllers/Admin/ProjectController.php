@@ -12,6 +12,7 @@ class ProjectController extends Controller
     protected $viewPath  = 'admin.projects';
     protected $routePath = 'projects';
     protected $title     = 'Project';
+    protected $folderPath = 'uploads/projects';
 
     public function index()
     {
@@ -21,6 +22,7 @@ class ProjectController extends Controller
             'records'   => $records,
             'title'     => "{$this->title}",
             'routePath' => $this->routePath,
+            'folderPath' => $this->folderPath,
         ]);
     }
 
@@ -51,7 +53,8 @@ public function store(Request $request)
     if ($request->hasFile('image')) {
         $image     = $request->file('image');
         $filename  = Str::random(40) . '.' . $image->getClientOriginalExtension();
-        $imagePath = $image->storeAs('uploads/projects', $filename, 'public');
+        // $imagePath = $image->storeAs('uploads/projects', $filename, 'public');
+        $image->move($this->folderPath, $filename);
     }
 
     Project::create([
@@ -63,7 +66,7 @@ public function store(Request $request)
         'ar_scope'      => $request->ar_scope,
         'en_objective'  => $request->en_objective,
         'ar_objective'  => $request->ar_objective,
-        'image'         => $imagePath,
+        'image'         => $filename,
     ]);
 
     return redirect()->route("{$this->routePath}.index")
@@ -79,6 +82,7 @@ public function store(Request $request)
             'record'    => $record,
             'title'     => "{$this->title}",
             'routePath' => $this->routePath,
+            'folderPath' => $this->folderPath,
         ]);
     }
 
@@ -105,18 +109,18 @@ public function update(Request $request, Project $project)
         'image'         => 'nullable|image|mimes:jpeg,png,jpg,gif|max:512',
     ]);
 
-    $imagePath = $project->image; // keep old image if no new one uploaded
+    $filename = $project->image; // keep old image if no new one uploaded
 
     if ($request->hasFile('image')) {
         // Delete old file if exists
-        if ($project->image && Storage::exists('public/' . $project->image)) {
-            Storage::delete('public/' . $project->image);
-        }
+        if (! empty($project->image) && file_exists(public_path($this->folderPath . '/' . $project->image))) {
+                unlink(public_path($this->folderPath . '/' . $project->image));
+            }
 
         // Upload new file
         $image     = $request->file('image');
         $filename  = Str::random(40) . '.' . $image->getClientOriginalExtension();
-        $imagePath = $image->storeAs('uploads/projects', $filename, 'public');
+        $image->move($this->folderPath, $filename);
     }
 
     $project->update([
@@ -128,7 +132,7 @@ public function update(Request $request, Project $project)
         'ar_scope'      => $request->ar_scope,
         'en_objective'  => $request->en_objective,
         'ar_objective'  => $request->ar_objective,
-        'image'         => $imagePath,
+        'image'         => $filename,
     ]);
 
     return redirect()->route("{$this->routePath}.index")

@@ -38,7 +38,7 @@ class FrontendController extends Controller
                 'ar_title'     => $slide->ar_title,
                 'ar_sub_title' => $slide->ar_sub_title,
                 'link'         => $slide->link,
-                'image'        => asset('storage/' . $slide->image),
+                'image'        => asset('uploads/hero_sliders/' . $slide->image),
             ];
         });
 
@@ -50,7 +50,7 @@ class FrontendController extends Controller
     public function clientLogos()
     {
         $logos = ClientLogo::all()->map(function ($logo) {
-            return asset('storage/' . $logo->image);
+            return asset('uploads/logos/' . $logo->image);
         });
 
         return response()->json([
@@ -72,7 +72,7 @@ class FrontendController extends Controller
     'en_objective'  => $project->en_objective,
     'ar_objective'  => $project->ar_objective,
     'image'         => $project->image
-        ? asset('storage/' . $project->image)
+        ? asset('uploads/projects/' . $project->image)
         : null,
     'created_at'    => $project->created_at,
     'updated_at'    => $project->updated_at,

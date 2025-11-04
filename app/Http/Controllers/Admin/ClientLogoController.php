@@ -9,18 +9,20 @@ use Illuminate\Support\Str;
 
 class ClientLogoController extends Controller
 {
-    protected $viewPath  = 'admin.logos';
-    protected $routePath = 'client-logos';
-    protected $title     = 'Logo';
+    protected $viewPath   = 'admin.logos';
+    protected $routePath  = 'client-logos';
+    protected $title      = 'Logo';
+    protected $folderPath = 'uploads/logos';
 
     public function index()
     {
         $records = ClientLogo::all();
 
         return view("{$this->viewPath}.index", [
-            'records'   => $records,
-            'title'     => "{$this->title}",
-            'routePath' => $this->routePath,
+            'records' => $records,
+            'title'   => "{$this->title}",
+            'routePath'  => $this->routePath,
+            'folderPath' => $this->folderPath,
 
         ]);
     }
@@ -28,7 +30,7 @@ class ClientLogoController extends Controller
     public function create()
     {
         return view("{$this->viewPath}.create", [
-            'title'     => "{$this->title}",
+            'title' => "{$this->title}",
             'routePath' => $this->routePath,
         ]);
     }
@@ -45,12 +47,12 @@ class ClientLogoController extends Controller
         if ($request->hasFile('image')) {
             $image     = $request->file('image');
             $filename  = time() . '_' . Str::random(6) . '.' . $image->getClientOriginalExtension();
-            $imagePath = $image->storeAs('uploads/logos', $filename, 'public');
+            $image->move($this->folderPath, $filename);
         }
 
         ClientLogo::create([
             'name'  => $request->name,
-            'image' => $imagePath,
+            'image' => $filename,
         ]);
 
         return redirect()->route("{$this->routePath}.index")->with('success', "{$this->title} created successfully.");
@@ -61,9 +63,10 @@ class ClientLogoController extends Controller
         $record = ClientLogo::findOrFail($id);
 
         return view("{$this->viewPath}.edit", [
-            'record'    => $record,
-            'title'     => "{$this->title}",
-            'routePath' => $this->routePath,
+            'record' => $record,
+            'title'  => "{$this->title}",
+            'routePath'  => $this->routePath,
+            'folderPath' => $this->folderPath,
         ]);
     }
 
@@ -74,27 +77,30 @@ class ClientLogoController extends Controller
 
     public function update(Request $request, ClientLogo $clientLogo)
     {
-        $imagePath = $clientLogo->image ?? '';
+        $filename = $clientLogo->image ?? '';
 
         if ($request->hasFile('image')) {
-            if ($request->image && Storage::exists('public/' . $request->image)) {
-                Storage::delete('public/' . $request->image);
+
+            if (! empty($clientLogo->image) && file_exists(public_path($this->folderPath . '/' . $clientLogo->image))) {
+                unlink(public_path($this->folderPath . '/' . $clientLogo->image));
             }
 
-            $image     = $request->file('image');
-            $filename  = Str::random(40) . '.' . $image->getClientOriginalExtension();
-            $imagePath = $image->storeAs('uploads/logos', $filename, 'public');
+            $image    = $request->file('image');
+            $filename = time() . '_' . Str::random(6) . '.' . $image->getClientOriginalExtension();
+            $image->move(public_path($this->folderPath), $filename);
         }
 
-        $clientLogo->name  = $request->name;
-        $clientLogo->image = $imagePath;
-        $clientLogo->save();
+        $clientLogo->update([
+            'name'  => $request->name,
+            'image' => $filename,
+        ]);
 
         return redirect()->route("{$this->routePath}.index")->with('success', "{$this->title} updated successfully.");
     }
 
     public function destroy(ClientLogo $clientLogo)
     {
+
         if ($clientLogo->logo) {
             Storage::disk('public')->delete($clientLogo->logo);
         }
@@ -102,7 +108,7 @@ class ClientLogoController extends Controller
         $clientLogo->delete();
 
         return redirect()
-        ->route("{$this->routePath}.index")
-        ->with('success', "{$this->title} deleted successfully.");
+            ->route("{$this->routePath}.index")
+            ->with('success', "{$this->title} deleted successfully.");
     }
 }

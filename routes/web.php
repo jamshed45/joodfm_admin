@@ -12,6 +12,7 @@ use App\Http\Controllers\Admin\SettingController;
 use App\Http\Controllers\Admin\ProjectController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Artisan;
 
 
 /*
@@ -24,6 +25,7 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+
 
 
 Route::get('/', function () {
@@ -57,4 +59,27 @@ Route::group(['middleware' => 'auth'], function () {
     Route::put('settings/{setting?}', [SettingController::class, 'update'])->name('settings.update');
     Route::resource('/settings', SettingController::class);
 
+
+});
+
+
+Route::get('/storage-link', function () {
+    Artisan::call('storage:link');
+    return 'Storage linked successfully!';
+});
+
+Route::get('/check-storage-link', function () {
+    $linkPath = public_path('storage');
+    $targetPath = storage_path('app/public');
+
+    if (file_exists($linkPath)) {
+        if (is_link($linkPath)) {
+            $actualTarget = readlink($linkPath);
+            return "✅ Storage link exists. It points to: <br>$actualTarget";
+        } else {
+            return "⚠️ A folder named 'storage' exists in /public but it's not a symlink.";
+        }
+    } else {
+        return "❌ No storage link found. Run <code>php artisan storage:link</code>.";
+    }
 });

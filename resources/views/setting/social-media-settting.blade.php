@@ -65,6 +65,13 @@
                                 </div>
                             </div>
 
+                            <div class="mb-3" bis_skin_checked="1">
+                                <label class="form-label" for="instagram_url">Whatsapp</label>
+                                <div bis_skin_checked="1">
+                                    <input type="url" class="form-control" name="whatsapp_url" id="whatsapp_url" value="{{ old('whatsapp_url', $settings['whatsapp_url'] ?? '') }}">
+                                </div>
+                            </div>
+
 
 
 

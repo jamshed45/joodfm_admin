@@ -73,7 +73,7 @@
                                         <td>
 
                                             @if ($record->image)
-                                                <img src="{{ asset('storage/' . $record->image) }}"
+                                                <img src="{{ asset($folderPath . '/' . $record->image) }}"
                                                     alt="{{ $record->name }}" width="60" height="60"
                                                     class="img-thumbnail">
                                             @else

@@ -9,9 +9,10 @@ use Illuminate\Support\Str;
 
 class HeroSliderController extends Controller
 {
-    protected $viewPath  = 'admin.hero_slides';
-    protected $routePath = 'hero-slides';
-    protected $title     = 'Hero Slide';
+    protected $viewPath   = 'admin.hero_slides';
+    protected $routePath  = 'hero-slides';
+    protected $title      = 'Hero Slide';
+    protected $folderPath = 'uploads/hero_sliders';
 
     public function index()
     {
@@ -20,7 +21,8 @@ class HeroSliderController extends Controller
         return view("{$this->viewPath}.index", [
             'records' => $records,
             'title'   => "{$this->title}",
-            'routePath' => $this->routePath,
+            'routePath'  => $this->routePath,
+            'folderPath' => $this->folderPath,
         ]);
     }
 
@@ -42,12 +44,12 @@ class HeroSliderController extends Controller
             'image'        => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
-        $imagePath = '';
+        $filename = '';
 
         if ($request->hasFile('image')) {
-            $image     = $request->file('image');
-            $filename  = time() . '_' . Str::random(6) . '.' . $image->getClientOriginalExtension();
-            $imagePath = $image->storeAs('uploads/hero_sliders', $filename, 'public');
+            $image    = $request->file('image');
+            $filename = time() . '_' . Str::random(6) . '.' . $image->getClientOriginalExtension();
+            $image->move($this->folderPath, $filename);
         }
 
         HeroSlider::create([
@@ -55,8 +57,8 @@ class HeroSliderController extends Controller
             'en_sub_title' => $request->en_sub_title,
             'ar_title'     => $request->ar_title,
             'ar_sub_title' => $request->ar_sub_title,
-            'link' => '',
-            'image'        => $imagePath,
+            'link'         => '',
+            'image'        => $filename,
         ]);
 
         return redirect()->route("{$this->routePath}.index")->with('success', "{$this->title} created successfully.");
@@ -69,7 +71,8 @@ class HeroSliderController extends Controller
         return view("{$this->viewPath}.edit", [
             'record' => $record,
             'title'  => "{$this->title}",
-            'routePath' => $this->routePath,
+            'routePath'  => $this->routePath,
+            'folderPath' => $this->folderPath,
         ]);
     }
 
@@ -78,7 +81,7 @@ class HeroSliderController extends Controller
         return $heroSlider;
     }
 
-    public function update(Request $request, HeroSlider $heroSlider)
+    public function update(Request $request, HeroSlider $hero_slide)
     {
         $request->validate([
             'en_title'     => 'required|string|max:255',
@@ -86,42 +89,59 @@ class HeroSliderController extends Controller
             'ar_title'     => 'required|string|max:255',
             'ar_sub_title' => 'required|string|max:255',
             'image'        => $request->isMethod('post')
-                        ? 'required|image|mimes:jpeg,png,jpg,gif|max:2048'
-                        : 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+                ? 'required|image|mimes:jpeg,png,jpg,gif|max:2048'
+                : 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
-        $imagePath = $heroSlider->image ?? '';
+        $filename = $hero_slide->image;
 
         if ($request->hasFile('image')) {
-            // Delete old file
-            if ($imagePath && Storage::exists('public/' . $imagePath)) {
-                Storage::delete('public/' . $imagePath);
+
+            if (! empty($hero_slide->image) && file_exists(public_path($this->folderPath . '/' . $hero_slide->image))) {
+                unlink(public_path($this->folderPath . '/' . $hero_slide->image));
             }
 
-            $image     = $request->file('image');
-            $filename  = Str::random(40) . '.' . $image->getClientOriginalExtension();
-            $imagePath = $image->storeAs('uploads/hero_sliders', $filename, 'public');
+            $image    = $request->file('image');
+            $filename = time() . '_' . Str::random(6) . '.' . $image->getClientOriginalExtension();
+            $image->move(public_path($this->folderPath), $filename);
+
         }
 
-$heroSlider->en_title     = $request->en_title;
-$heroSlider->en_sub_title = $request->en_sub_title;
-$heroSlider->ar_title     = $request->ar_title;
-$heroSlider->ar_sub_title = $request->ar_sub_title;
-$heroSlider->link = '';
-        $heroSlider->image     = $imagePath;
-        $heroSlider->save();
+        $hero_slide->update([
+            'en_title'     => $request->en_title,
+            'en_sub_title' => $request->en_sub_title,
+            'ar_title'     => $request->ar_title,
+            'ar_sub_title' => $request->ar_sub_title,
+            'link'         => '',
+            'image'        => $filename,
+        ]);
+
 
         return redirect()->route("{$this->routePath}.index")->with('success', "{$this->title} updated successfully.");
     }
 
-    public function destroy(HeroSlider $heroSlider)
+    // public function destroy(HeroSlider $heroSlider)
+    // {
+    //     dd($heroSlider->toArray());
+
+    //     if ($heroSlider->image) {
+    //         Storage::disk('public')->delete($heroSlider->image);
+    //     }
+
+    //     $heroSlider->delete();
+
+    //     return redirect()
+    //         ->route("{$this->routePath}.index")
+    //         ->with('success', "{$this->title} deleted successfully.");
+    // }
+    public function destroy(HeroSlider $hero_slide)
     {
 
-        if ($heroSlider->image) {
-            Storage::disk('public')->delete($heroSlider->image);
+        if ($hero_slide->image) {
+            Storage::disk('public')->delete($hero_slide->image);
         }
 
-        $heroSlider->delete();
+        $hero_slide->delete();
 
         return redirect()
             ->route("{$this->routePath}.index")

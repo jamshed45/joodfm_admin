@@ -132,7 +132,7 @@
     {{-- Show preview if editing --}}
     @if (isset($record) && $record->image)
         <div class="mt-2">
-            <img src="{{ asset('storage/' . $record->image) }}" alt="Preview" width="120"
+            <img src="{{ asset($folderPath . '/' . $record->image) }}" alt="Preview" width="120"
                 class="img-thumbnail">
         </div>
     @endif
