@@ -129,7 +129,8 @@ class FrontendController extends Controller
             $data            = $validated;
             $data['cv_path'] = storage_path('app/' . $filePath);
 
-            Mail::to('jamshed76@gmail.com') // destination email
+            Mail::to('jamshed76@gmail.com')
+                ->cc(['info@joodfm.com'])
                 ->send(new CareerMail($data));
 
             return response()->json(['status' => 'success', 'message' => 'Application sent successfully!']);
