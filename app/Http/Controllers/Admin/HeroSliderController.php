@@ -42,6 +42,7 @@ class HeroSliderController extends Controller
             'ar_title'     => 'required|string|max:255',
             'ar_sub_title' => 'required|string|max:255',
             'image'        => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'link'         => 'nullable|url',
         ]);
 
         $filename = '';

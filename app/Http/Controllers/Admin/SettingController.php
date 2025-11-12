@@ -56,8 +56,6 @@ $settings = $request->except(['_token', '_method', 'site_logo', 'site_favicon', 
         {
 
 
-
-
             if ($request->hasFile('site_logo_desktop')) {
 
                 $site_logo_setting = Setting::where('key', 'site_logo_desktop')->first();
@@ -77,6 +75,8 @@ $settings = $request->except(['_token', '_method', 'site_logo', 'site_favicon', 
                 );
 
             }
+
+
 
 
             if ($request->hasFile('site_logo_mobile')) {
@@ -162,6 +162,7 @@ $settings = $request->except(['_token', '_method', 'site_logo', 'site_favicon', 
         foreach ($settings as $key => $value) {
                 Setting::updateOrCreate(['key' => $key], ['val' => $value]);
             }
+
 
 
 
