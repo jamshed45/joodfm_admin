@@ -48,7 +48,7 @@
                                 <label class="form-label" for="site_logo">⁠Logo ( Desktop )</label>
                                 @if(isset($settings['site_logo_desktop']) && $settings['site_logo_desktop'] !='')
                                     <br>
-                                    <img src="{{ asset('storage/' . $settings['site_logo_desktop']) }}" width="150" alt="Site Desktop Logo" class="img-thumbnail mt-2" style="max-width: 150px;">
+                                    <img src="{{ asset( $settings['site_logo_desktop']) }}" width="150" alt="Site Desktop Logo" class="img-thumbnail mt-2" style="max-width: 150px;">
                                     <br><br>
                                 @endif
 
@@ -61,7 +61,7 @@
                                 <label class="form-label" for="site_logo">⁠Logo ( Mobile )</label>
                                 @if(isset($settings['site_logo_mobile']) && $settings['site_logo_mobile'] !='')
                                     <br>
-                                    <img src="{{ asset('storage/' . $settings['site_logo_mobile']) }}"  width="150" alt="Site Mobile Logo" class="img-thumbnail mt-2" style="max-width: 150px;">
+                                    <img src="{{ asset( $settings['site_logo_mobile']) }}"  width="150" alt="Site Mobile Logo" class="img-thumbnail mt-2" style="max-width: 150px;">
                                     <br><br>
                                 @endif
 
@@ -77,7 +77,7 @@
                                 <label class="form-label" for="site_logo">Favicon</label>
                                 @if(isset($settings['site_favicon']) && $settings['site_favicon'] !='' )
                                     <br>
-                                    <img src="{{ asset('storage/' . $settings['site_favicon']) }}" alt="Site Logo" class="img-thumbnail mt-2" style="max-width: 75px;">
+                                    <img src="{{ asset( $settings['site_favicon']) }}" alt="Site Logo" class="img-thumbnail mt-2" style="max-width: 75px;">
                                     <br><br>
                                 @endif
 

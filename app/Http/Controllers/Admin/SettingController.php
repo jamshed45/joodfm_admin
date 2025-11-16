@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Auth;
 
 class SettingController extends Controller
 {
+    protected $folderPath = 'uploads/settings';
 
     function index()
     {
@@ -28,7 +29,10 @@ class SettingController extends Controller
             ->pluck('val', 'key')
             ->toArray();
 
-        return view('setting.site-settting', compact('settings'));
+        return view('setting.site-settting', [
+            'settings'   => $settings,
+            'folderPath' => $this->folderPath,
+        ]);
     }
 
     function social_media_setting()
@@ -56,82 +60,73 @@ $settings = $request->except(['_token', '_method', 'site_logo', 'site_favicon', 
         {
 
 
-            if ($request->hasFile('site_logo_desktop')) {
+if ($request->hasFile('site_logo_desktop')) {
+    $site_logo_setting = Setting::where('key', 'site_logo_desktop')->first();
 
-                $site_logo_setting = Setting::where('key', 'site_logo_desktop')->first();
+    if (!empty($site_logo_setting->val) && file_exists(public_path($this->folderPath . '/' . basename($site_logo_setting->val)))) {
+        unlink(public_path($this->folderPath . '/' . basename($site_logo_setting->val)));
+    }
 
-                if ($site_logo_setting && $site_logo_setting->val) {
-                    Storage::disk('public')->delete($site_logo_setting->val);
-                }
+    $image = $request->file('site_logo_desktop');
+    $filename = time() . '_' . Str::random(6) . '.' . $image->getClientOriginalExtension();
+    $image->move(public_path($this->folderPath), $filename);
 
-                $image = $request->file('site_logo_desktop');
-                $filename = time().'_'.$image->getClientOriginalName();
-                echo $imagePath = $image->storeAs('uploads/settings', $filename, 'public');
+    Setting::updateOrCreate(
+        ['user_id' => null, 'key' => 'site_logo_desktop'],
+        ['val' => $this->folderPath . '/' . $filename]
+    );
+}
 
+if ($request->hasFile('site_logo_mobile')) {
+    $site_logo_setting = Setting::where('key', 'site_logo_mobile')->first();
 
-                Setting::updateOrCreate(
-                    ['user_id' => null, 'key' => 'site_logo_desktop'],
-                    ['val' => $imagePath]
-                );
+    if (!empty($site_logo_setting->val) && file_exists(public_path($this->folderPath . '/' . basename($site_logo_setting->val)))) {
+        unlink(public_path($this->folderPath . '/' . basename($site_logo_setting->val)));
+    }
 
-            }
+    $image = $request->file('site_logo_mobile');
+    $filename = time() . '_' . Str::random(6) . '.' . $image->getClientOriginalExtension();
+    $image->move(public_path($this->folderPath), $filename);
 
+    Setting::updateOrCreate(
+        ['user_id' => null, 'key' => 'site_logo_mobile'],
+        ['val' => $this->folderPath . '/' . $filename]
+    );
+}
 
+if ($request->hasFile('site_logo_icon')) {
+    $site_logo_icon_setting = Setting::where('key', 'site_logo_icon')->first();
 
+    if (!empty($site_logo_icon_setting->val) && file_exists(public_path($this->folderPath . '/' . basename($site_logo_icon_setting->val)))) {
+        unlink(public_path($this->folderPath . '/' . basename($site_logo_icon_setting->val)));
+    }
 
-            if ($request->hasFile('site_logo_mobile')) {
-                $site_logo_setting = Setting::where('key', 'site_logo_mobile')->first();
+    $image = $request->file('site_logo_icon');
+    $filename = time() . '_' . Str::random(6) . '.' . $image->getClientOriginalExtension();
+    $image->move(public_path($this->folderPath), $filename);
 
-                if ($site_logo_setting && $site_logo_setting->val) {
-                    Storage::disk('public')->delete($site_logo_setting->val);
-                }
+    Setting::updateOrCreate(
+        ['user_id' => null, 'key' => 'site_logo_icon'],
+        ['val' => $this->folderPath . '/' . $filename]
+    );
+}
 
-                $image = $request->file('site_logo_mobile');
-                $filename = time().'_'.$image->getClientOriginalName();
-                $imagePath = $image->storeAs('uploads/settings', $filename, 'public');
+if ($request->hasFile('site_favicon')) {
+    $site_favicon_setting = Setting::where('key', 'site_favicon')->first();
 
-                // Global setting
-                Setting::updateOrCreate(
-                    ['user_id' => null, 'key' => 'site_logo_mobile'],
-                    ['val' => $imagePath]
-                );
+    if (!empty($site_favicon_setting->val) && file_exists(public_path($this->folderPath . '/' . basename($site_favicon_setting->val)))) {
+        unlink(public_path($this->folderPath . '/' . basename($site_favicon_setting->val)));
+    }
 
+    $image = $request->file('site_favicon');
+    $filename = time() . '_' . Str::random(6) . '.' . $image->getClientOriginalExtension();
+    $image->move(public_path($this->folderPath), $filename);
 
-            }
-
-            if ($request->hasFile('site_logo_icon')) {
-                $site_logo_icon_setting = Setting::where('key', 'site_logo_icon')->first();
-
-                if ($site_logo_icon_setting && $site_logo_icon_setting->val) {
-                    Storage::disk('public')->delete($site_logo_icon_setting->val);
-                }
-
-                $image = $request->file('site_logo_icon');
-                $filename = time().'_'.$image->getClientOriginalName();
-                $imagePath = $image->storeAs('uploads/settings', $filename, 'public');
-
-                Setting::updateOrCreate(
-                    ['user_id' => null, 'key' => 'site_logo_icon'],
-                    ['val' => $imagePath]
-                );
-            }
-
-            if ($request->hasFile('site_favicon')) {
-                $site_favicon_setting = Setting::where('key', 'site_favicon')->first();
-
-                if ($site_favicon_setting && $site_favicon_setting->val) {
-                    Storage::disk('public')->delete($site_favicon_setting->val);
-                }
-
-                $image = $request->file('site_favicon');
-                $filename = time().'_'.$image->getClientOriginalName();
-                $imagePath = $image->storeAs('uploads/settings', $filename, 'public');
-
-                Setting::updateOrCreate(
-                    ['user_id' => null, 'key' => 'site_favicon'],
-                    ['val' => $imagePath]
-                );
-            }
+    Setting::updateOrCreate(
+        ['user_id' => null, 'key' => 'site_favicon'],
+        ['val' => $this->folderPath . '/' . $filename]
+    );
+}
 
             foreach ($settings as $key => $value) {
                     Setting::updateOrCreate(['key' => $key], ['val' => $value]);

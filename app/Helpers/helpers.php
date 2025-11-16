@@ -107,10 +107,10 @@ if (!function_exists('get_desktop_logo')) {
                 ->value('val');
         }
 
-        $getLogoUrl = asset('storage/' . $logoUrl);
+        $getLogoUrl = asset('uploads/' . $logoUrl);
         $site_logo_desktop = $logoUrl
-            ? '<img src="' . $getLogoUrl . '" alt="Site Logo" height="40">'
-            : '<img src="' . asset('default_logo.png') . '" alt="Default Site Logo" height="40">'; // Fallback to a hardcoded default logo
+            ? '<img src="' . $getLogoUrl . '" alt="Site Logo" height="40">1'
+            : '<img src="' . asset('default_logo.png') . '" alt="Default Site Logo" height="40">1'; // Fallback to a hardcoded default logo
 
         return $site_logo_desktop;
     }

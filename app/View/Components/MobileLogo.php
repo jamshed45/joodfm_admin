@@ -22,7 +22,7 @@ class MobileLogo extends Component
             ->where('key', 'site_logo_mobile')
             ->value('val');
 
-        return $imagePath ? asset('storage/' . $imagePath) : null;
+        return $imagePath ? asset($imagePath) : null;
     }
 
     public function render(): View|Closure|string

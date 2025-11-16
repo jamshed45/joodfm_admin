@@ -21,7 +21,7 @@ class DesktopLogo extends Component
             ->where('key', 'site_logo_desktop')
             ->value('val');
 
-        return $imagePath ? asset('storage/' . $imagePath) : null;
+        return $imagePath ? asset( $imagePath) : null;
     }
 
     public function render(): View|string
