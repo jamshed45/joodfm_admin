@@ -291,7 +291,7 @@ if (!function_exists('get_user_profile_image')) {
 
         if ($profileImagePath) {
 
-            $profileImageUrl = asset('storage/' . $profileImagePath);
+            $profileImageUrl = asset( $profileImagePath);
             $userProfileImage = '<img class="rounded-circle header-profile-user" src="' . htmlspecialchars($profileImageUrl, ENT_QUOTES, 'UTF-8') . '" alt="User Profile" height="40">';
         } else {
 

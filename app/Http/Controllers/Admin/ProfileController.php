@@ -16,6 +16,9 @@ use App\Models\Organization;
 
 class ProfileController extends Controller
 {
+
+    protected $folderPath = 'uploads/profiles';
+
     public function edit()
     {
 
@@ -54,21 +57,28 @@ class ProfileController extends Controller
 
         $profileImage = $user->profile_image;
 
-        if ($request->hasFile('profile_image')) {
+if ($request->hasFile('profile_image')) {
 
-            if ($profileImage && Storage::exists('public/' . $profileImage)) {
-                Storage::disk('public')->delete($profileImage);
-            }
+    // Delete old image if exists
+    if ($user->profile_image && file_exists(public_path($user->profile_image))) {
+        unlink(public_path($user->profile_image));
+    }
 
-            $image = $request->file('profile_image');
-            $filename = time().'_'.$image->getClientOriginalName();
-            $imagePath = $image->storeAs('uploads/profiles', $filename, 'public');
+    $image    = $request->file('profile_image');
+    $filename = Str::random(40) . '.' . $image->getClientOriginalExtension();
 
-            $user->profile_image = $imagePath;
-        }
+    // Move new image
+    $image->move($this->folderPath, $filename);
+
+    // Save new path
+    $user->profile_image = $this->folderPath . '/' . $filename;
+}
+
 
 
         $user->save();
+
+
 
         return redirect()->route('profile.edit')->with('success', 'Profile updated successfully.');
     }

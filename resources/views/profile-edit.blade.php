@@ -27,7 +27,7 @@
 
 
                                 @if(Auth::user()->profile_image)
-                                    <img src="{{ asset('storage/' . $user->profile_image) }}" alt="" class="avatar-xl rounded-circle img-thumbnail">
+                                    <img src="{{ asset($user->profile_image) }}" alt="" class="avatar-xl rounded-circle img-thumbnail">
                                 @else
                                     <img src="{{URL::asset('assets/images/users/avatar-1.jpg')}}" alt="" class="avatar-xl rounded-circle img-thumbnail">
                                 @endif
