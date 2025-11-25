@@ -50,8 +50,8 @@
                             </div>
 
                             <div class="mb-3">
-                                <label>Logo Image</label>
-                                                            <small>
+                                <label>Image</label>
+                            <small>
     ( Allowed formats: JPG, JPEG, PNG, GIF — Max size: 0.5 MB (512 KB) )
 </small>
                                 <input type="file" name="image" class="form-control"

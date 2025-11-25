@@ -53,6 +53,9 @@
 
                         <div class="mb-3">
                             <label>Logo Image</label>
+                                                        <small>
+    ( Allowed formats: JPG, JPEG, PNG, GIF — Max size: 0.5 MB (512 KB) )
+</small>
                             @if ($record->image)
                                 <div class="mb-2">
                                     <img src="{{ asset($folderPath . '/' . $record->image) }}" alt="Profile Image" width="200">

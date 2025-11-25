@@ -41,7 +41,7 @@ class HeroSliderController extends Controller
             'en_sub_title' => 'required|string|max:255',
             'ar_title'     => 'required|string|max:255',
             'ar_sub_title' => 'required|string|max:255',
-            'image'        => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'image'        => 'required|image|mimes:jpeg,png,jpg|max:1024|dimensions:max_width=1920,max_height=1080',
             'link'         => 'nullable|url',
         ]);
 
@@ -89,9 +89,7 @@ class HeroSliderController extends Controller
             'en_sub_title' => 'required|string|max:255',
             'ar_title'     => 'required|string|max:255',
             'ar_sub_title' => 'required|string|max:255',
-            'image'        => $request->isMethod('post')
-                ? 'required|image|mimes:jpeg,png,jpg,gif|max:2048'
-                : 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'image'        => 'required|image|mimes:jpeg,png,jpg|max:1024|dimensions:max_width=1920,max_height=1080',
         ]);
 
         $filename = $hero_slide->image;

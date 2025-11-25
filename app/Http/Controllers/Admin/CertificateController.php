@@ -2,21 +2,21 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\ClientLogo;
+use App\Models\Certificate;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
-class ClientLogoController extends Controller
+class CertificateController extends Controller
 {
-    protected $viewPath   = 'admin.logos';
-    protected $routePath  = 'client-logos';
-    protected $title      = 'Logo';
-    protected $folderPath = 'uploads/logos';
+    protected $viewPath   = 'admin.certificates';
+    protected $routePath  = 'certificates';
+    protected $title      = 'Certificate';
+    protected $folderPath = 'uploads/certificates';
 
     public function index()
     {
-        $records = ClientLogo::all();
+        $records = Certificate::all();
 
         return view("{$this->viewPath}.index", [
             'records' => $records,
@@ -50,7 +50,7 @@ class ClientLogoController extends Controller
             $image->move($this->folderPath, $filename);
         }
 
-        ClientLogo::create([
+        Certificate::create([
             'name'  => $request->name,
             'image' => $filename,
         ]);
@@ -60,7 +60,7 @@ class ClientLogoController extends Controller
 
     public function edit(string $id)
     {
-        $record = ClientLogo::findOrFail($id);
+        $record = Certificate::findOrFail($id);
 
         return view("{$this->viewPath}.edit", [
             'record' => $record,
@@ -70,24 +70,24 @@ class ClientLogoController extends Controller
         ]);
     }
 
-    public function show(ClientLogo $clientLogo)
+    public function show(Certificate $certificate)
     {
-        return $clientLogo;
+        return $certificate;
     }
 
-    public function update(Request $request, ClientLogo $clientLogo)
+    public function update(Request $request, Certificate $certificate)
     {
         $request->validate([
             'name'  => 'required|string|max:255',
             'image' => 'required|image|mimes:jpeg,png,jpg|max:512',
         ]);
 
-        $filename = $clientLogo->image ?? '';
+        $filename = $certificate->image ?? '';
 
         if ($request->hasFile('image')) {
 
-            if (! empty($clientLogo->image) && file_exists(public_path($this->folderPath . '/' . $clientLogo->image))) {
-                unlink(public_path($this->folderPath . '/' . $clientLogo->image));
+            if (! empty($certificate->image) && file_exists(public_path($this->folderPath . '/' . $certificate->image))) {
+                unlink(public_path($this->folderPath . '/' . $certificate->image));
             }
 
             $image    = $request->file('image');
@@ -103,14 +103,14 @@ class ClientLogoController extends Controller
         return redirect()->route("{$this->routePath}.index")->with('success', "{$this->title} updated successfully.");
     }
 
-    public function destroy(ClientLogo $clientLogo)
+    public function destroy(Certificate $certificate)
     {
 
-        if ($clientLogo->logo) {
-            Storage::disk('public')->delete($clientLogo->logo);
+        if ($certificate->image) {
+            Storage::disk('public')->delete($certificate->image);
         }
 
-        $clientLogo->delete();
+        $certificate->delete();
 
         return redirect()
             ->route("{$this->routePath}.index")

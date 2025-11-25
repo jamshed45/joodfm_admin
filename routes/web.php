@@ -1,6 +1,6 @@
 <?php
 
-
+use App\Http\Controllers\Admin\CertificateController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\PermissionController;
 use App\Http\Controllers\Admin\ClientLogoController;
@@ -43,6 +43,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::resource('permissions', PermissionController::class);
 
     Route::resource('client-logos', ClientLogoController::class);
+    Route::resource('certificates', CertificateController::class);
     Route::resource('hero-slides', HeroSliderController::class);
     Route::resource('jobs', JobController::class);
     Route::resource('projects', ProjectController::class);
@@ -54,6 +55,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/profile', [ProfileController::class, 'update'])->name('profile.update');
 
     Route::get('/site-setting', [SettingController::class, 'siteSetting'])->name('view.siteSetting');
+    Route::get('/site-setting-all', [SettingController::class, 'siteSettingAll'])->name('view.siteSettingAll');
     Route::get('/social-media-setting', [SettingController::class, 'social_media_setting'])->name('view.social-media-setting');
 
     Route::put('settings/{setting?}', [SettingController::class, 'update'])->name('settings.update');

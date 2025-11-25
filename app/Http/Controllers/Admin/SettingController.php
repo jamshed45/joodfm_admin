@@ -35,6 +35,22 @@ class SettingController extends Controller
         ]);
     }
 
+        function siteSettingAll()
+    {
+        $settings = Setting::whereNull('user_id')
+            ->where(function ($query) {
+                $query->whereNull('user_id')
+                    ->orWhere('user_id', '');
+            })
+            ->pluck('val', 'key')
+            ->toArray();
+
+        return view('setting.site-settting-all', [
+            'settings'   => $settings,
+            'folderPath' => $this->folderPath,
+        ]);
+    }
+
     function social_media_setting()
     {
         $settings = Setting::whereNull('user_id')

@@ -11,7 +11,9 @@ class SettingController extends Controller
 {
     public function index()
     {
-        $settings = Setting::all();
+        $keys = ['phone', 'email', 'whatsapp', 'whatsapp_link', 'x_url', 'facebook_url',  'linkedin_url', 'instagram_url'];
+
+        $settings = Setting::whereIn('key', $keys)->get();
 
         $keyed = $settings->pluck(null, 'key')->map(function ($setting) {
             if ($setting['url'] == 1 && !empty($setting['val'])) {

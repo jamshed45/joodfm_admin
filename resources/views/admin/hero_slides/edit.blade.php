@@ -95,6 +95,9 @@
                             <!-- Image -->
                             <div class="mb-3">
                                 <label for="image">Image</label>
+                                <small class="form-text text-muted">
+    ( Upload an image (JPEG, PNG, JPG), image size 1920×1080 pixels, and less than 1MB. )
+</small>
                                 <input type="file" name="image" id="image"
                                     class="form-control @error('image') is-invalid @enderror">
                                 @error('image')

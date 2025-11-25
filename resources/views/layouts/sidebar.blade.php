@@ -31,6 +31,13 @@
                 </li>
 
                 <li>
+                    <a href="{{ route('certificates.index') }}" class="waves-effect">
+                        <i class="ti-settings"></i>
+                        <span>Certificates</span>
+                    </a>
+                </li>
+
+                <li>
                     <a href="{{ route('projects.index') }}" class="waves-effect">
                         <i class="ti-settings"></i>
                         <span>Projects</span>
@@ -38,12 +45,12 @@
                 </li>
 
 
-                {{-- <li>
+                <li>
                     <a href="{{ route('settings.index') }}" class="waves-effect">
                         <i class="ti-settings"></i>
                         <span>Settings</span>
                     </a>
-                </li> --}}
+                </li>
 
 
             </ul>

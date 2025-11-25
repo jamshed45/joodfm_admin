@@ -28,68 +28,52 @@
                                 @csrf
                                 @method('PUT')
 
-                            <input type="hidden" name="site_general_setting" value="1" />
+                            <input type="hidden" name="site_general_setting-all" value="1" />
 
-                            <div class="mb-3" bis_skin_checked="1">
+                            {{-- <div class="mb-3" bis_skin_checked="1">
                                 <label class="form-label" for="site_title">Site Title</label>
                                 <div bis_skin_checked="1">
                                     <input type="text" class="form-control" name="site_title" id="site_title" value="{{ old('site_title', $settings['site_title'] ?? '') }}" required>
                                 </div>
-                            </div>
+                            </div> --}}
 
                             <div class="mb-3" bis_skin_checked="1">
-                                <label class="form-label" for="admin_email">Email</label>
+                                <label class="form-label" for="email">Email</label>
                                 <div bis_skin_checked="1">
-                                    <input type="text" class="form-control" name="admin_email" id="admin_email" value="{{ old('admin_email', $settings['admin_email'] ?? '') }}" required>
+                                    <input type="text" class="form-control" name="email" id="email" value="{{ old('email', $settings['email'] ?? '') }}" required>
                                 </div>
                             </div>
 
                             <div class="mb-3" bis_skin_checked="1">
-                                <label class="form-label" for="site_logo">⁠Logo ( Desktop )</label>
-                                @if(isset($settings['site_logo_desktop']) && $settings['site_logo_desktop'] !='')
-                                    <br>
-                                    <img src="{{ asset( $settings['site_logo_desktop']) }}" width="150" alt="Site Desktop Logo" class="img-thumbnail mt-2" style="max-width: 150px;">
-                                    <br><br>
-                                @endif
-
+                                <label class="form-label" for="phone">Phone</label>
                                 <div bis_skin_checked="1">
-                                    <input type="file" class="form-control" name="site_logo_desktop" id="site_logo_desktop" value="{{ old('site_logo', $settings['site_logo'] ?? '') }}" >
+                                    <input type="text" class="form-control" name="phone" id="phone" value="{{ old('phone', $settings['phone'] ?? '') }}" required>
                                 </div>
                             </div>
 
                             <div class="mb-3" bis_skin_checked="1">
-                                <label class="form-label" for="site_logo">⁠Logo ( Mobile )</label>
-                                @if(isset($settings['site_logo_mobile']) && $settings['site_logo_mobile'] !='')
-                                    <br>
-                                    <img src="{{ asset( $settings['site_logo_mobile']) }}"  width="150" alt="Site Mobile Logo" class="img-thumbnail mt-2" style="max-width: 150px;">
-                                    <br><br>
-                                @endif
-
+                                <label class="form-label" for="whatsapp">Whatsapp No</label>
                                 <div bis_skin_checked="1">
-                                    <input type="file" class="form-control" name="site_logo_mobile" id="site_logo_mobile" value="{{ old('site_logo_mobile', $settings['site_logo_mobile'] ?? '') }}" >
-                                </div>
-                            </div>
+                                    <input type="text" class="form-control" name="whatsapp" id="whatsapp" value="{{ old('whatsapp', $settings['whatsapp'] ?? '') }}" required>
 
-
-
-
-                            <div class="mb-3" bis_skin_checked="1">
-                                <label class="form-label" for="site_logo">Favicon</label>
-                                @if(isset($settings['site_favicon']) && $settings['site_favicon'] !='' )
-                                    <br>
-                                    <img src="{{ asset( $settings['site_favicon']) }}" alt="Site Logo" class="img-thumbnail mt-2" style="max-width: 75px;">
-                                    <br><br>
-                                @endif
-
-                                <div bis_skin_checked="1">
-                                    <input type="file" class="form-control" name="site_favicon" id="site_favicon" value="{{ old('site_favicon', $settings['site_favicon'] ?? '') }}" >
                                 </div>
                             </div>
 
                             <div class="mb-3" bis_skin_checked="1">
-                                <label  class="form-label" for="record_per_page">⁠Record Per Page</label>
-                                <input type="number" name="record_per_page" id="record_per_page" class="form-control" value="{{ old('record_per_page', $settings['record_per_page'] ?? '') }}" required>
+                                <label class="form-label" for="whatsapp_link">Whatsapp Link</label>
+                                <div bis_skin_checked="1">
+                                    <input type="text" class="form-control" name="whatsapp_link" id="whatsapp_link" value="{{ old('whatsapp_link', $settings['whatsapp_link'] ?? '') }}" required>
+
+                                </div>
                             </div>
+
+                            {{-- <div class="mb-3" bis_skin_checked="1">
+                                <label class="form-label" for="address">Address</label>
+                                <div bis_skin_checked="1">
+                                    <textarea type="text" class="form-control" name="address" id="address" required>{{ old('address', $settings['address'] ?? '') }}</textarea>
+
+                                </div>
+                            </div> --}}
 
 
 

@@ -39,13 +39,13 @@
 
                             <input type="hidden" name="social_media_setting" value="1" />
 
-                            <div class="mb-3" bis_skin_checked="1">
+                            {{-- <div class="mb-3" bis_skin_checked="1">
                                 <label class="form-label" for="facebook_url">Facebook</label>
                                 <div bis_skin_checked="1">
                                     <input type="url" class="form-control" name="facebook_url" id="facebook_url"
                                         value="{{ old('facebook_url', $settings['facebook_url'] ?? '') }}">
                                 </div>
-                            </div>
+                            </div> --}}
 
                             <div class="mb-3" bis_skin_checked="1">
                                 <label class="form-label" for="x_url">Twitter/X</label>
@@ -63,13 +63,13 @@
                                 </div>
                             </div>
 
-                            <div class="mb-3" bis_skin_checked="1">
+                            {{-- <div class="mb-3" bis_skin_checked="1">
                                 <label class="form-label" for="linkedin_url">Youtube</label>
                                 <div bis_skin_checked="1">
                                     <input type="url" class="form-control" name="youtube_url" id="youtube_url"
                                         value="{{ old('youtube_url', $settings['youtube_url'] ?? '') }}">
                                 </div>
-                            </div>
+                            </div> --}}
 
                             <div class="mb-3" bis_skin_checked="1">
                                 <label class="form-label" for="instagram_url">Instagram</label>

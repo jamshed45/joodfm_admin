@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Mail\CareerMail;
 use App\Mail\ContactMail;
+use App\Models\Certificate;
 use App\Models\ClientLogo;
 use App\Models\HeroSlider;
 use App\Models\Project;
@@ -11,6 +12,7 @@ use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
+
 
 class FrontendController extends Controller
 {
@@ -60,6 +62,17 @@ class FrontendController extends Controller
 
         return response()->json([
             'logos' => $logos,
+        ]);
+    }
+
+    public function certificates()
+    {
+        $certificates = Certificate::all()->map(function ($certificate) {
+            return asset('uploads/certificates/' . $certificate->image);
+        });
+
+        return response()->json([
+            'certificates' => $certificates,
         ]);
     }
 
